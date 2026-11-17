@@ -1,0 +1,23 @@
+{
+  "interface": {
+    "displayName": "PMCR-O Agent",
+    "shortDescription": "Coordinate PMCR-O protocol",
+    "longDescription": "Own the PMCR-O protocol, seed interpretation, role routing, cycle boundaries, and evidence rules while delegating Orchestrate, Plan, Make, Check, Reflect, and Hook behavior to their marketplace agents.",
+    "developerName": "Planner Agent",
+    "category": "Developer Tools",
+    "capabilities": [],
+    "defaultPrompt": "For every actionable request, resolve the real Agent -> Plugin -> Skill -> Function. When the installed Hook Agent is available, allow it to autonomously emit and attempt only the applicable lifecycle functions above target execution. Invoke the real target capability and verify evidence. Hook emission is not execution; unavailable lifecycle providers return NOT_INVOKED."
+  },
+  "name": "pmcro",
+  "version": "0.4.0",
+  "description": "Own the PMCR-O protocol, seed interpretation, role routing, cycle boundaries, and evidence rules while delegating Orchestrate, Plan, Make, Check, Reflect, and Hook behavior to their marketplace agents.",
+  "author": {
+    "name": "Planner Agent"
+  },
+  "keywords": [
+    "pmcro",
+    "agent",
+    "governance"
+  ],
+  "skills": "./skills"
+}

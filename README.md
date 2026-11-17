@@ -1,2 +1,4 @@
-# pmcro-agent
-PMCR-O pmcro-agent marketplace agent repository
+# PMCR-O Agent
+
+Canonical plugin: `pmcro`.
+Human handle: `@pmcro-agent`.
