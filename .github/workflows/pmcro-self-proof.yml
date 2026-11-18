@@ -1,0 +1,85 @@
+name: PMCR-O Proves Itself
+
+on:
+  push:
+    branches: ["claude/pmcro-self-proof"]
+  pull_request:
+    paths:
+      - "eng/self_prove.py"
+      - "eng/test_self_prove.py"
+      - ".github/workflows/pmcro-self-proof.yml"
+      - "marketplace.yaml"
+      - "contracts/a2a/**"
+      - "eng/run_cycle.py"
+      - "eng/validate_marketplace.py"
+      - "eng/validate_a2a_contract.py"
+      - "eng/validate_a2a_federation_transport.py"
+
+permissions:
+  contents: read
+
+jobs:
+  self-proof:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Checkout PMCR-O subject
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Obtain reviewed marketplace providers
+        run: |
+          mkdir -p "$RUNNER_TEMP/pmcro-providers"
+          for repo in orchestrator-agent planner-agent maker-agent checker-agent reflector-agent hook-agent marketplace-agent; do
+            git clone --no-checkout "https://github.com/pmcro-marketplace/$repo.git" "$RUNNER_TEMP/pmcro-providers/$repo"
+          done
+
+      - name: Reject inflated self-proof receipts
+        run: python3 -m unittest eng/test_self_prove.py -v
+
+      - name: Prepare private PMCR-O Trail scope
+        run: |
+          proof_home="$(mktemp -d)"
+          mkdir -m 700 "$proof_home/.pmcro" "$proof_home/.pmcro/projects" "$proof_home/.pmcro/projects/pmcro-self-proof"
+          echo "PMCRO_SELF_PROOF_HOME=$proof_home" >> "$GITHUB_ENV"
+
+      - name: PMCR-O executes proof against itself
+        run: |
+          env HOME="$PMCRO_SELF_PROOF_HOME" python3 -I -B eng/self_prove.py             --providers-dir "$RUNNER_TEMP/pmcro-providers"             --project-id pmcro-self-proof             --execute             --output self-proof.json
+          cat self-proof.json
+
+      - name: Fresh process independently reopens and rechecks self-proof
+        run: |
+          env HOME="$PMCRO_SELF_PROOF_HOME" python3 -I -B eng/self_prove.py             --providers-dir "$RUNNER_TEMP/pmcro-providers"             --project-id pmcro-self-proof             --verify self-proof.json             --output self-verification.json
+          cat self-verification.json
+          python3 - <<'PY'
+          import json
+          proof=json.load(open("self-proof.json"))
+          verify=json.load(open("self-verification.json"))
+          assert proof["status"]=="PASS"
+          assert proof["cycle"]["checker"]=="PASS"
+          assert verify["status"]=="PASS"
+          assert verify["self_proof_verified"] is True
+          assert verify["trail_reopen"]["invocation"]=="NOT_INVOKED"
+          assert proof["claims"]["native_role_agents"]=="NOT_INVOKED"
+          assert proof["claims"]["approval"]=="NOT_ISSUED"
+          print("PASS PMCR-O proved its own bounded federation and reopened the evidence independently")
+          PY
+
+      - name: Upload self-proof receipts
+        uses: actions/upload-artifact@v4
+        with:
+          name: pmcro-self-proof
+          path: |
+            self-proof.json
+            self-verification.json
+
+      - name: Record self-proof
+        run: |
+          printf '%s\n'             '## PMCR-O Proves Itself'             '- Subject: pmcro-marketplace/pmcro-agent at the checked-out commit.'             '- Own marketplace membership/provider pins: PASS.'             '- Own A2A role/governance contract: PASS.'             '- Own A2A federation transport manifest: PASS.'             '- Own five-phase bounded cycle: Checker PASS and Trail sealed.'             '- Fresh process reopened the Trail and independently reran static checks: PASS.'             '- Native role/model providers: NOT_INVOKED.'             '- Hook lifecycle: NOT_INVOKED.'             '- Independent approval: NOT_ISSUED.'             >> "$GITHUB_STEP_SUMMARY"
