@@ -1,0 +1,32 @@
+name: PMCR-O A2A Contract Proof
+
+on:
+  pull_request:
+    paths:
+      - "contracts/a2a/**"
+      - "eng/validate_a2a_contract.py"
+      - "eng/test_a2a_contract.py"
+      - "marketplace.yaml"
+      - ".github/workflows/pmcro-a2a-contract.yml"
+  push:
+    branches:
+      - "claude/a2a-role-services"
+
+permissions:
+  contents: read
+
+jobs:
+  contract-proof:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Validate A2A federation contract
+        run: python3 -I -B eng/validate_a2a_contract.py
+      - name: Run negative contract tests
+        run: python3 -m unittest eng/test_a2a_contract.py -v
+      - name: Record proof summary
+        run: |
+          printf '%s\n'             '## PMCR-O A2A Contract Proof'             'Five independent role-service identities validated.'             'A2A owns agent-to-agent transport; MCP remains the tool boundary.'             'Only Orchestrator may advance/dispatch the global lifecycle.'             'This proof does not claim live A2A network execution.' >> "$GITHUB_STEP_SUMMARY"
