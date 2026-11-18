@@ -1,6 +1,6 @@
 ---
 name: pmcro
-description: Own the PMCR-O protocol contract and coordinate bounded role-agent execution without duplicating role capabilities.
+description: Own the PMCR-O protocol contract and coordinate bounded role-agent execution without duplicating role capabilities. USE FOR coordinating the PMCR-O lifecycle across installed role agents and enforcing evidence-based advancement. DO NOT USE FOR performing interpret, orchestrate, plan, make, check, or reflect work itself; use the corresponding role capability.
 ---
 # pmcro
 
@@ -33,4 +33,4 @@ A PASS requires actual evidence. An emitted invocation, route, plan, or declared
 Emission is not invocation. The installed Hook Agent may surround this role but does not replace its business function.
 
 ## Resources
-See `references/contract.md` and `assets/request.json`.
+See `references/contract.md`, `references/protocol.md`, `assets/request.json`, and `scripts/validate.py`.
