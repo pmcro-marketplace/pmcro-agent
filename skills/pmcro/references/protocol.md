@@ -1,11 +1,18 @@
 # PMCR-O Protocol
 
-PMCR-O roles:
-`interpret`, `orchestrate`, `plan`, `make`, `check`, `reflect`.
+PMCR-O cognitive roles: `interpret`, `orchestrate`, `plan`, `make`, `check`, `reflect`.
 
-Hook Agent is separate:
-plugin `hook`, skill/subagent `hook`.
+PMCR-O lifecycle skills use flat addresses:
 
-Lifecycle functions resolve through Hook Agent:
-`/agent-startup`, `/input`, `/pre-model-call`, `/post-model-call`,
-`/pre-tool-call`, `/post-tool-call`, `/handoff`, `/output`, `/error`, `/agent-shutdown`.
+- `/pmcro:agent-startup`
+- `/pmcro:input`
+- `/pmcro:pre-model-call`
+- `/pmcro:post-model-call`
+- `/pmcro:pre-tool-call`
+- `/pmcro:post-tool-call`
+- `/pmcro:handoff`
+- `/pmcro:output`
+- `/pmcro:error`
+- `/pmcro:agent-shutdown`
+
+See [lifecycle.md](lifecycle.md) for required context, routing, and provider evidence. The logical addresses require actual registered providers for execution.

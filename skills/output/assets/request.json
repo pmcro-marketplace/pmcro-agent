@@ -1,0 +1,23 @@
+{
+  "kind": "LifecycleContext",
+  "version": 1,
+  "run": {
+    "id": "example-run",
+    "parent_id": null
+  },
+  "target": {
+    "agent": "example-agent",
+    "plugin": "example",
+    "skill": "example",
+    "function": "example"
+  },
+  "event": {
+    "name": "output"
+  },
+  "governance": {
+    "posture": "enforce"
+  },
+  "evidence": {
+    "correlation_id": "example-correlation"
+  }
+}
