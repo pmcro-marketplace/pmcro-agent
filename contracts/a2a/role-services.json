@@ -1,0 +1,165 @@
+{
+  "kind": "PmcroA2AFederation",
+  "version": 1,
+  "protocol": {
+    "name": "A2A",
+    "version": "1.0",
+    "bindings": [
+      "http-json",
+      "json-rpc"
+    ],
+    "protocol_capabilities": {
+      "messages": true,
+      "tasks": true,
+      "streaming": true
+    },
+    "agent_framework": {
+      "server_registration": "AddA2AServer",
+      "http_json_mapping": "MapA2AHttpJson",
+      "json_rpc_mapping": "MapA2AJsonRpc",
+      "agent_card_mapping": "MapWellKnownAgentCard",
+      "built_in_response_mode": "message-only",
+      "built_in_task_resumption": false,
+      "built_in_task_cancellation": false,
+      "custom_task_handler_required_for_task_lifecycle": true,
+      "durable_session_store_required": true
+    }
+  },
+  "governance": {
+    "global_lifecycle_owner": "orchestrator-agent",
+    "tool_boundary": "mcp",
+    "trail_boundary": "pmcro-trail",
+    "required_correlation_fields": [
+      "workspace_id",
+      "trail_id",
+      "cycle_id",
+      "a2a_context_id"
+    ],
+    "optional_correlation_fields": [
+      "a2a_task_id"
+    ],
+    "next_cycle_dispatch_owner": "orchestrator-agent"
+  },
+  "roles": {
+    "orchestrator": {
+      "agent": "orchestrator-agent",
+      "plugin": "orchestrator",
+      "skill": "orchestrate",
+      "repository": "pmcro-marketplace/orchestrator-agent",
+      "service": {
+        "mode": "independent-host",
+        "server_name": "orchestrator-agent",
+        "endpoint": "/a2a/orchestrator",
+        "well_known_agent_card": true
+      },
+      "proof": {
+        "status": "PASS",
+        "scope": "a2a-transport",
+        "branch": "claude/a2a-service-host",
+        "commit": "d7063662f54b19365e317d8a3dc95eaf26d67ce1",
+        "workflow_run": 44254283565,
+        "provider_execution": "NOT_INVOKED",
+        "global_lifecycle_owner": true
+      },
+      "may_advance_global_lifecycle": true,
+      "may_dispatch_next_cycle": true,
+      "mcp_access": "validated-resources-only"
+    },
+    "planner": {
+      "agent": "planner-agent",
+      "plugin": "planner",
+      "skill": "plan",
+      "repository": "pmcro-marketplace/planner-agent",
+      "service": {
+        "mode": "independent-host",
+        "server_name": "planner-agent",
+        "endpoint": "/a2a/planner",
+        "well_known_agent_card": true
+      },
+      "proof": {
+        "status": "PASS",
+        "scope": "a2a-transport",
+        "branch": "claude/a2a-service-host",
+        "commit": "5b532c962714e66da569c26110396fdd2b2c92a5",
+        "workflow_run": 44254573720,
+        "provider_execution": "NOT_INVOKED"
+      },
+      "may_advance_global_lifecycle": false,
+      "may_dispatch_next_cycle": false,
+      "mcp_access": "validated-resources-only"
+    },
+    "maker": {
+      "agent": "maker-agent",
+      "plugin": "maker",
+      "skill": "make",
+      "repository": "pmcro-marketplace/maker-agent",
+      "service": {
+        "mode": "independent-host",
+        "server_name": "maker-agent",
+        "endpoint": "/a2a/maker",
+        "well_known_agent_card": true
+      },
+      "proof": {
+        "status": "PASS",
+        "scope": "a2a-transport",
+        "branch": "claude/a2a-service-host",
+        "commit": "6e393b4553dfa1677e1030c9d59dbef46bd705ba",
+        "workflow_run": 44254667525,
+        "provider_execution": "NOT_INVOKED",
+        "actuator_mcp": "NOT_CONNECTED"
+      },
+      "may_advance_global_lifecycle": false,
+      "may_dispatch_next_cycle": false,
+      "mcp_access": "authorized-actuators"
+    },
+    "checker": {
+      "agent": "checker-agent",
+      "plugin": "checker",
+      "skill": "check",
+      "repository": "pmcro-marketplace/checker-agent",
+      "service": {
+        "mode": "independent-host",
+        "server_name": "checker-agent",
+        "endpoint": "/a2a/checker",
+        "well_known_agent_card": true
+      },
+      "proof": {
+        "status": "PASS",
+        "scope": "a2a-transport",
+        "branch": "claude/a2a-service-host",
+        "commit": "773c94530c9dd9fe2f4f275ad5f3fbb7b19a4db2",
+        "workflow_run": 44254754857,
+        "provider_execution": "NOT_INVOKED",
+        "mutation": "DISALLOWED"
+      },
+      "may_advance_global_lifecycle": false,
+      "may_dispatch_next_cycle": false,
+      "mcp_access": "read-only-verification"
+    },
+    "reflector": {
+      "agent": "reflector-agent",
+      "plugin": "reflector",
+      "skill": "reflect",
+      "repository": "pmcro-marketplace/reflector-agent",
+      "service": {
+        "mode": "independent-host",
+        "server_name": "reflector-agent",
+        "endpoint": "/a2a/reflector",
+        "well_known_agent_card": true
+      },
+      "proof": {
+        "status": "PASS",
+        "scope": "a2a-transport",
+        "branch": "claude/a2a-service-host",
+        "commit": "4c0add58f6968ea2d95d11298139e39a90f7435e",
+        "workflow_run": 44254837237,
+        "provider_execution": "NOT_INVOKED",
+        "next_cycle_dispatch": false
+      },
+      "may_advance_global_lifecycle": false,
+      "may_dispatch_next_cycle": false,
+      "mcp_access": "validated-resources-only",
+      "next_intent_target": "orchestrator-agent"
+    }
+  }
+}
