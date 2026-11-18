@@ -1,0 +1,68 @@
+{
+  "kind": "Marketplace",
+  "version": 1,
+  "name": "pmcro-agent",
+  "source": {
+    "type": "github-repository",
+    "repository": "pmcro-marketplace/pmcro-agent",
+    "path": "marketplace.yaml"
+  },
+  "plugins": [
+    {
+      "name": "pmcro",
+      "agent": "pmcro-agent",
+      "enabled": true,
+      "skills": ["interpret", "pmcro"],
+      "source": {"type": "github-plugin", "repository": "pmcro-marketplace/pmcro-agent", "ref": "d87457d3285638cb07a64a1c843577950cc1640d", "path": "."}
+    },
+    {
+      "name": "orchestrator",
+      "agent": "orchestrator-agent",
+      "enabled": true,
+      "skills": ["orchestrate"],
+      "source": {"type": "github-plugin", "repository": "pmcro-marketplace/orchestrator-agent", "ref": "0dc3cc2858afa469ee1c01eb72217a1bc8bdf694", "path": "."}
+    },
+    {
+      "name": "planner",
+      "agent": "planner-agent",
+      "enabled": true,
+      "skills": ["plan"],
+      "source": {"type": "github-plugin", "repository": "pmcro-marketplace/planner-agent", "ref": "750a8f6983072bb8e7af109501b886134f17e145", "path": "."}
+    },
+    {
+      "name": "maker",
+      "agent": "maker-agent",
+      "enabled": true,
+      "skills": ["make"],
+      "source": {"type": "github-plugin", "repository": "pmcro-marketplace/maker-agent", "ref": "57a0409cbdee0f95255e068d1ba6be286d0f1b5d", "path": "."}
+    },
+    {
+      "name": "checker",
+      "agent": "checker-agent",
+      "enabled": true,
+      "skills": ["check"],
+      "source": {"type": "github-plugin", "repository": "pmcro-marketplace/checker-agent", "ref": "ae8375421bbc1bf9a65c52b1057da5523bb0857a", "path": "."}
+    },
+    {
+      "name": "reflector",
+      "agent": "reflector-agent",
+      "enabled": true,
+      "skills": ["reflect"],
+      "source": {"type": "github-plugin", "repository": "pmcro-marketplace/reflector-agent", "ref": "8b166f59dcfd7408a18081d8249a4836af30807c", "path": "."}
+    },
+    {
+      "name": "hook",
+      "agent": "hook-agent",
+      "enabled": true,
+      "skills": ["hook"],
+      "source": {"type": "github-plugin", "repository": "pmcro-marketplace/hook-agent", "ref": "8389439dd55d61302d2ba498000922a1344c53a8", "path": "."}
+    },
+    {
+      "name": "marketplace",
+      "agent": "marketplace-agent",
+      "enabled": true,
+      "skills": ["marketplace"],
+      "source": {"type": "github-plugin", "repository": "pmcro-marketplace/marketplace-agent", "ref": "5a384a33fed247fb2b85b177ccb9b6ca3901c36c", "path": "."}
+    }
+  ]
+}
