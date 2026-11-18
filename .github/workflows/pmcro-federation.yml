@@ -23,10 +23,16 @@ jobs:
         run: |
           export PMCRO_PROVIDERS_DIR="$RUNNER_TEMP/pmcro-providers"
           python3 -B eng/test_marketplace.py
+          python3 -B eng/test_cycle_host.py
           python3 -I -B eng/validate_marketplace.py --providers-dir "$PMCRO_PROVIDERS_DIR"
       - name: Reopen private automatic proof
         run: |
           proof_home="$(mktemp -d)"
           mkdir -m 700 "$proof_home/.pmcro" "$proof_home/.pmcro/projects" "$proof_home/.pmcro/projects/federation-proof"
           env HOME="$proof_home" python3 -I -B eng/validate_marketplace.py --providers-dir "$RUNNER_TEMP/pmcro-providers" --project-id federation-proof
-          printf '%s\n' '## PMCR-O Federation' 'All eight pinned memberships and nine skills verified. Private validation frame sealed and reopened.' 'Role execution and independent approval were not performed.' >> "$GITHUB_STEP_SUMMARY"
+          result="$(env HOME="$proof_home" python3 -I -B eng/run_cycle.py --providers-dir "$RUNNER_TEMP/pmcro-providers" --project-id federation-proof --execute-proof)"
+          printf '%s\n' "$result"
+          receipt_id="$(printf '%s' "$result" | python3 -c 'import json,sys; print(json.load(sys.stdin)["trail_id"])')"
+          env HOME="$proof_home" python3 -I -B eng/run_cycle.py --providers-dir "$RUNNER_TEMP/pmcro-providers" --project-id federation-proof --verify-trail "$receipt_id"
+          printf '%s\n' '## PMCR-O Federation' 'All eight pinned memberships and nine skills verified. Private validation frame sealed and reopened.' >> "$GITHUB_STEP_SUMMARY"
+          printf '%s\n' 'All five local deterministic role callbacks completed; Checker PASS; seven sealed frames independently reopened. Native role agents and independent approval were not invoked.' >> "$GITHUB_STEP_SUMMARY"
