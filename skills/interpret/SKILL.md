@@ -1,6 +1,6 @@
 ---
 name: interpret
-description: Interpret messy seed intent or BehavioralIntent events before orchestration.
+description: Interpret messy seed intent or BehavioralIntent events before orchestration. USE FOR preserving raw user input while producing one bounded refined intent for Orchestrator Agent. DO NOT USE FOR planning, making, checking, reflecting, or coordinating the full PMCR-O protocol; use the owning role or pmcro skill.
 ---
 # interpret
 
@@ -33,4 +33,4 @@ A PASS requires actual evidence. An emitted invocation, route, plan, or declared
 Emission is not invocation. The installed Hook Agent may surround this role but does not replace its business function.
 
 ## Resources
-See `references/contract.md` and `assets/request.json`.
+See `references/contract.md`, `assets/request.json`, and `scripts/validate.py`.
