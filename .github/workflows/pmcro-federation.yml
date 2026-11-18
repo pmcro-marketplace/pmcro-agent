@@ -1,0 +1,32 @@
+name: PMCR-O Federation Proof
+on:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  proof:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Obtain existing provider Git objects
+        run: |
+          mkdir -p "$RUNNER_TEMP/pmcro-providers"
+          for repo in orchestrator-agent planner-agent maker-agent checker-agent reflector-agent hook-agent marketplace-agent; do
+            git clone --no-checkout "https://github.com/pmcro-marketplace/$repo.git" "$RUNNER_TEMP/pmcro-providers/$repo"
+          done
+      - name: Validate federation and negative gates
+        run: |
+          export PMCRO_PROVIDERS_DIR="$RUNNER_TEMP/pmcro-providers"
+          python3 -B eng/test_marketplace.py
+          python3 -I -B eng/validate_marketplace.py --providers-dir "$PMCRO_PROVIDERS_DIR"
+      - name: Reopen private automatic proof
+        run: |
+          proof_home="$(mktemp -d)"
+          mkdir -m 700 "$proof_home/.pmcro" "$proof_home/.pmcro/projects" "$proof_home/.pmcro/projects/federation-proof"
+          env HOME="$proof_home" python3 -I -B eng/validate_marketplace.py --providers-dir "$RUNNER_TEMP/pmcro-providers" --project-id federation-proof
+          printf '%s\n' '## PMCR-O Federation' 'All eight pinned memberships and nine skills verified. Private validation frame sealed and reopened.' 'Role execution and independent approval were not performed.' >> "$GITHUB_STEP_SUMMARY"
