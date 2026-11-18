@@ -23,14 +23,14 @@ One concrete role result or a BLOCKED/NOT_INVOKED disposition with evidence.
 1. Preserve the raw seed and current cycle state.
 2. Resolve the appropriate installed role agent.
 3. Route Orchestrate -> Plan -> Make -> Check -> Reflect through their actual capabilities.
-4. Allow Hook Agent to operate as the lifecycle top layer when available.
+4. Resolve applicable lifecycle events using the directly named PMCR-O skills in [the lifecycle contract](references/lifecycle.md). Attempt the actual provider only when registered and authorized.
 5. Require evidence before advancing or declaring PASS.
 
 ## Validation
 A PASS requires actual evidence. An emitted invocation, route, plan, or declared path is not proof of execution.
 
 ## Pitfalls
-Emission is not invocation. The installed Hook Agent may surround this role but does not replace its business function.
+Emission is not invocation. Lifecycle routing may surround this role but never replaces its business function; unavailable providers return NOT_INVOKED.
 
 ## Resources
 See `references/contract.md` and `assets/request.json`.

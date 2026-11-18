@@ -2,15 +2,15 @@
   "interface": {
     "displayName": "PMCR-O Agent",
     "shortDescription": "Coordinate PMCR-O protocol",
-    "longDescription": "Own the PMCR-O protocol, seed interpretation, role routing, cycle boundaries, and evidence rules while delegating Orchestrate, Plan, Make, Check, Reflect, and Hook behavior to their marketplace agents.",
+    "longDescription": "Own the PMCR-O protocol, seed interpretation, role routing, bounded activation readiness, lifecycle event capabilities, cycle boundaries, and evidence rules.",
     "developerName": "Planner Agent",
     "category": "Developer Tools",
     "capabilities": [],
-    "defaultPrompt": "For every actionable request, resolve the real Agent -> Plugin -> Skill -> Function. When the installed Hook Agent is available, allow it to autonomously emit and attempt only the applicable lifecycle functions above target execution. Invoke the real target capability and verify evidence. Hook emission is not execution; unavailable lifecycle providers return NOT_INVOKED."
+    "defaultPrompt": "For every actionable request, resolve the real Agent -> Plugin -> Skill -> Function and emit exact functionality and inputs. Resolve applicable lifecycle events through directly named PMCR-O skills such as /pmcro:input. Invoke only actual available providers; verify target and lifecycle results independently. Emission is not invocation; unavailable providers return NOT_INVOKED."
   },
   "name": "pmcro",
-  "version": "0.4.0",
-  "description": "Own the PMCR-O protocol, seed interpretation, role routing, cycle boundaries, and evidence rules while delegating Orchestrate, Plan, Make, Check, Reflect, and Hook behavior to their marketplace agents.",
+  "version": "0.6.0",
+  "description": "Own the PMCR-O protocol, seed interpretation, role routing, bounded activation readiness, lifecycle event capabilities, cycle boundaries, and evidence rules.",
   "author": {
     "name": "Planner Agent"
   },

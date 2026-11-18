@@ -1,0 +1,20 @@
+{
+  "kind": "ActivationRequest",
+  "version": 1,
+  "capability": "/pmcro:activation",
+  "request_id": "example-request",
+  "correlation_id": "example-correlation",
+  "host": "example-host",
+  "runtime": "example-runtime",
+  "target": {
+    "agent": "example-agent",
+    "plugin": "example-plugin",
+    "skill": "example-skill",
+    "function": "example-function"
+  },
+  "scope": {
+    "purpose": "capability-readiness",
+    "max_targets": 1
+  },
+  "evidence_refs": ["example-evidence"]
+}

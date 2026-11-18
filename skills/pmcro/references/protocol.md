@@ -1,11 +1,26 @@
 # PMCR-O Protocol
 
-PMCR-O roles:
-`interpret`, `orchestrate`, `plan`, `make`, `check`, `reflect`.
+PMCR-O cognitive roles: `interpret`, `orchestrate`, `plan`, `make`, `check`, `reflect`.
 
-Hook Agent is separate:
-plugin `hook`, skill/subagent `hook`.
+## Activation readiness
 
-Lifecycle functions resolve through Hook Agent:
-`/agent-startup`, `/input`, `/pre-model-call`, `/post-model-call`,
-`/pre-tool-call`, `/post-tool-call`, `/handoff`, `/output`, `/error`, `/agent-shutdown`.
+`/pmcro:activation` is a distinct direct capability for validating and resolving one requested agent/plugin/skill/function target. Use an [ActivationRequest v1](../../activation/references/contract.md). Resolve provider readiness and authorization independently using observed host evidence. The offline resolver must return `NOT_INVOKED`, `activated: false`, and readiness `UNVERIFIED`; validation is not proof of activation. A capability gap routes to the Skill Agent, then to an authorized Plugin Agent/Creator only if discovery establishes the gap. It does not create or install automatically.
+
+Actual bounded delegation continues through the independently resolved `/pmcro:subagent`. Activation must not duplicate that capability or execute the requested target. Lifecycle event routes remain unchanged.
+
+## Lifecycle events
+
+PMCR-O lifecycle skills use flat addresses:
+
+- `/pmcro:agent-startup`
+- `/pmcro:input`
+- `/pmcro:pre-model-call`
+- `/pmcro:post-model-call`
+- `/pmcro:pre-tool-call`
+- `/pmcro:post-tool-call`
+- `/pmcro:handoff`
+- `/pmcro:output`
+- `/pmcro:error`
+- `/pmcro:agent-shutdown`
+
+See [lifecycle.md](lifecycle.md) for required context, routing, and provider evidence. The logical addresses require actual registered providers for execution.

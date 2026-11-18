@@ -30,7 +30,7 @@ One concrete role result or a BLOCKED/NOT_INVOKED disposition with evidence.
 A PASS requires actual evidence. An emitted invocation, route, plan, or declared path is not proof of execution.
 
 ## Pitfalls
-Emission is not invocation. The installed Hook Agent may surround this role but does not replace its business function.
+Emission is not invocation. Applicable lifecycle events resolve through PMCR-O direct skills and do not replace the interpretation function.
 
 ## Resources
 See `references/contract.md` and `assets/request.json`.
