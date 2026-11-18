@@ -37,16 +37,24 @@ def validate(contract=None, marketplace=None):
     require(set(protocol.get("bindings", [])) == {"http-json", "json-rpc"},
             "both HTTP+JSON and JSON-RPC bindings are required")
 
+    pc = protocol.get("protocol_capabilities", {})
+    require(pc.get("messages") is True and pc.get("tasks") is True and pc.get("streaming") is True,
+            "A2A protocol capabilities are incomplete")
+
     af = protocol.get("agent_framework", {})
     require(af.get("server_registration") == "AddA2AServer", "stale A2A server registration API")
     require(af.get("http_json_mapping") == "MapA2AHttpJson", "stale HTTP+JSON mapping API")
     require(af.get("json_rpc_mapping") == "MapA2AJsonRpc", "stale JSON-RPC mapping API")
     require(af.get("agent_card_mapping") == "MapWellKnownAgentCard", "stale agent-card mapping API")
-    require(af.get("background_responses") is False,
-            "background A2A responses are not authorized by this contract")
-    require(af.get("durable_session_store_required") is True
-            and af.get("durable_task_store_required") is True,
-            "production A2A requires durable session/task storage")
+    require(af.get("built_in_response_mode") == "message-only",
+            "current built-in Agent Framework A2A hosting must be modeled as message-only")
+    require(af.get("built_in_task_resumption") is False
+            and af.get("built_in_task_cancellation") is False,
+            "built-in task lifecycle must remain disabled")
+    require(af.get("custom_task_handler_required_for_task_lifecycle") is True,
+            "task lifecycle requires a custom handler")
+    require(af.get("durable_session_store_required") is True,
+            "production A2A requires durable session storage")
 
     gov = contract.get("governance", {})
     require(gov.get("global_lifecycle_owner") == "orchestrator-agent",
@@ -55,9 +63,12 @@ def validate(contract=None, marketplace=None):
             "next-cycle dispatch owner must be Orchestrator Agent")
     require(gov.get("tool_boundary") == "mcp", "MCP must remain the tool/resource boundary")
     require(gov.get("trail_boundary") == "pmcro-trail", "Trail boundary changed")
-    required_corr = {"workspace_id", "trail_id", "cycle_id", "a2a_context_id", "a2a_task_id"}
-    require(set(gov.get("correlation_fields", [])) == required_corr,
-            "A2A/Trail correlation fields are incomplete")
+    required_corr = {"workspace_id", "trail_id", "cycle_id", "a2a_context_id"}
+    optional_corr = {"a2a_task_id"}
+    require(set(gov.get("required_correlation_fields", [])) == required_corr,
+            "required A2A/Trail correlation fields are incomplete")
+    require(set(gov.get("optional_correlation_fields", [])) == optional_corr,
+            "optional A2A/Trail correlation fields changed")
 
     roles = contract.get("roles", {})
     require(tuple(roles.keys()) == ROLES, "role order or membership changed")
@@ -115,8 +126,8 @@ def validate(contract=None, marketplace=None):
         "bindings": sorted(protocol["bindings"]),
         "global_lifecycle_owner": gov["global_lifecycle_owner"],
         "tool_boundary": gov["tool_boundary"],
-        "background_responses": af["background_responses"],
-        "durable_state_required": True
+        "built_in_response_mode": af["built_in_response_mode"],
+        "durable_session_store_required": af["durable_session_store_required"]
     }
 
 def main():
