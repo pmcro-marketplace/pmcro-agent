@@ -4,6 +4,8 @@ Human: `@pmcro-agent /<function> [arguments]`.
 
 Direct lifecycle capability: `/pmcro:<event>` maps to plugin `pmcro`, skill `<event>`. No intermediate public namespace.
 
+Direct activation capability: `@pmcro-agent /activation` → `/pmcro:activation` (plugin `pmcro`, skill `activation`). Supply an `ActivationRequest` v1, as described in [the activation contract](skills/activation/references/contract.md). It resolves readiness; it does not perform the requested target or authorize it. `/pmcro:subagent` remains an independent capability for actual bounded delegation.
+
 Core flow:
 `RESOLVE -> EMIT APPLICABLE LIFECYCLE -> INVOKE REAL PROVIDER WHEN AVAILABLE -> INVOKE TARGET -> VERIFY -> EVIDENCE`.
 
