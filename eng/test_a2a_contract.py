@@ -13,42 +13,50 @@ class A2AContractTests(unittest.TestCase):
         self.contract = mod.load(mod.CONTRACT)
         self.marketplace = mod.load(mod.MARKETPLACE)
 
-    def test_canonical_contract_passes(self):
+    def validate_bad(self, mutate):
+        bad = copy.deepcopy(self.contract)
+        mutate(bad)
+        with self.assertRaises(ValueError):
+            mod.validate(bad, copy.deepcopy(self.marketplace))
+
+    def test_canonical_contract_passes_with_five_transport_proofs(self):
         result = mod.validate(copy.deepcopy(self.contract), copy.deepcopy(self.marketplace))
         self.assertEqual(result["status"], "PASS")
-        self.assertEqual(result["roles"], 5)
-        self.assertEqual(result["built_in_response_mode"], "message-only")
+        self.assertEqual(result["transport_proofs"], 5)
+        self.assertEqual(result["provider_execution"], "NOT_INVOKED")
 
     def test_checker_cannot_advance_global_lifecycle(self):
-        bad = copy.deepcopy(self.contract)
-        bad["roles"]["checker"]["may_advance_global_lifecycle"] = True
-        with self.assertRaises(ValueError):
-            mod.validate(bad, copy.deepcopy(self.marketplace))
+        self.validate_bad(lambda x: x["roles"]["checker"].__setitem__("may_advance_global_lifecycle", True))
 
     def test_duplicate_a2a_endpoint_is_rejected(self):
-        bad = copy.deepcopy(self.contract)
-        bad["roles"]["planner"]["service"]["endpoint"] = bad["roles"]["maker"]["service"]["endpoint"]
-        with self.assertRaises(ValueError):
-            mod.validate(bad, copy.deepcopy(self.marketplace))
+        self.validate_bad(lambda x: x["roles"]["planner"]["service"].__setitem__(
+            "endpoint", x["roles"]["maker"]["service"]["endpoint"]))
 
     def test_mcp_tool_boundary_cannot_be_replaced_by_a2a(self):
-        bad = copy.deepcopy(self.contract)
-        bad["governance"]["tool_boundary"] = "a2a"
-        with self.assertRaises(ValueError):
-            mod.validate(bad, copy.deepcopy(self.marketplace))
+        self.validate_bad(lambda x: x["governance"].__setitem__("tool_boundary", "a2a"))
 
     def test_built_in_host_cannot_claim_task_lifecycle(self):
-        bad = copy.deepcopy(self.contract)
-        bad["protocol"]["agent_framework"]["built_in_task_resumption"] = True
-        with self.assertRaises(ValueError):
-            mod.validate(bad, copy.deepcopy(self.marketplace))
+        self.validate_bad(lambda x: x["protocol"]["agent_framework"].__setitem__(
+            "built_in_task_resumption", True))
 
-    def test_task_id_is_optional_for_message_only_host(self):
-        bad = copy.deepcopy(self.contract)
-        bad["governance"]["required_correlation_fields"].append("a2a_task_id")
-        bad["governance"]["optional_correlation_fields"] = []
-        with self.assertRaises(ValueError):
-            mod.validate(bad, copy.deepcopy(self.marketplace))
+    def test_missing_or_failed_transport_proof_is_rejected(self):
+        self.validate_bad(lambda x: x["roles"]["planner"]["proof"].__setitem__("status", "FAIL"))
+
+    def test_transport_proof_cannot_claim_role_execution(self):
+        self.validate_bad(lambda x: x["roles"]["orchestrator"]["proof"].__setitem__(
+            "provider_execution", "PASS"))
+
+    def test_maker_transport_proof_cannot_connect_actuators(self):
+        self.validate_bad(lambda x: x["roles"]["maker"]["proof"].__setitem__(
+            "actuator_mcp", "CONNECTED"))
+
+    def test_checker_transport_proof_cannot_allow_mutation(self):
+        self.validate_bad(lambda x: x["roles"]["checker"]["proof"].__setitem__(
+            "mutation", "ALLOWED"))
+
+    def test_reflector_transport_proof_cannot_dispatch_next_cycle(self):
+        self.validate_bad(lambda x: x["roles"]["reflector"]["proof"].__setitem__(
+            "next_cycle_dispatch", True))
 
     def test_role_must_match_marketplace_membership(self):
         bad_marketplace = copy.deepcopy(self.marketplace)
