@@ -1,0 +1,153 @@
+name: PMCR-O A2A Federation Transport Proof
+
+on:
+  push:
+    branches: ["claude/a2a-federation-transport"]
+  pull_request:
+    paths:
+      - "contracts/a2a/**"
+      - "eng/validate_a2a_federation_transport.py"
+      - "eng/test_a2a_federation_transport.py"
+      - ".github/workflows/pmcro-a2a-federation-transport.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  federation-transport-proof:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout PMCR-O
+        uses: actions/checkout@v4
+      - name: Checkout Orchestrator
+        uses: actions/checkout@v4
+        with:
+          repository: pmcro-marketplace/orchestrator-agent
+          ref: d7063662f54b19365e317d8a3dc95eaf26d67ce1
+          path: federation/orchestrator
+      - name: Checkout Planner
+        uses: actions/checkout@v4
+        with:
+          repository: pmcro-marketplace/planner-agent
+          ref: 5b532c962714e66da569c26110396fdd2b2c92a5
+          path: federation/planner
+      - name: Checkout Maker
+        uses: actions/checkout@v4
+        with:
+          repository: pmcro-marketplace/maker-agent
+          ref: 6e393b4553dfa1677e1030c9d59dbef46bd705ba
+          path: federation/maker
+      - name: Checkout Checker
+        uses: actions/checkout@v4
+        with:
+          repository: pmcro-marketplace/checker-agent
+          ref: 773c94530c9dd9fe2f4f275ad5f3fbb7b19a4db2
+          path: federation/checker
+      - name: Checkout Reflector
+        uses: actions/checkout@v4
+        with:
+          repository: pmcro-marketplace/reflector-agent
+          ref: 4c0add58f6968ea2d95d11298139e39a90f7435e
+          path: federation/reflector
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - name: Validate pinned manifest
+        run: |
+          python3 -I -B eng/validate_a2a_federation_transport.py
+          python3 -m unittest eng/test_a2a_federation_transport.py -v
+      - name: Build all hosts and probes
+        run: |
+          dotnet build federation/orchestrator/services/a2a/OrchestratorAgent.Host/OrchestratorAgent.Host.csproj -c Release --nologo
+          dotnet build federation/orchestrator/services/a2a/OrchestratorAgent.Probe/OrchestratorAgent.Probe.csproj -c Release --nologo
+          dotnet build federation/planner/services/a2a/PlannerAgent.Host/PlannerAgent.Host.csproj -c Release --nologo
+          dotnet build federation/planner/services/a2a/PlannerAgent.Probe/PlannerAgent.Probe.csproj -c Release --nologo
+          dotnet build federation/maker/services/a2a/MakerAgent.Host/MakerAgent.Host.csproj -c Release --nologo
+          dotnet build federation/maker/services/a2a/MakerAgent.Probe/MakerAgent.Probe.csproj -c Release --nologo
+          dotnet build federation/checker/services/a2a/CheckerAgent.Host/CheckerAgent.Host.csproj -c Release --nologo
+          dotnet build federation/checker/services/a2a/CheckerAgent.Probe/CheckerAgent.Probe.csproj -c Release --nologo
+          dotnet build federation/reflector/services/a2a/ReflectorAgent.Host/ReflectorAgent.Host.csproj -c Release --nologo
+          dotnet build federation/reflector/services/a2a/ReflectorAgent.Probe/ReflectorAgent.Probe.csproj -c Release --nologo
+      - name: Start all five role hosts
+        run: |
+          ASPNETCORE_URLS=http://127.0.0.1:5091 A2A_PUBLIC_BASE_URL=http://127.0.0.1:5091 dotnet run --project federation/orchestrator/services/a2a/OrchestratorAgent.Host/OrchestratorAgent.Host.csproj -c Release --no-build > /tmp/orchestrator.log 2>&1 & echo $! > /tmp/orchestrator.pid
+          ASPNETCORE_URLS=http://127.0.0.1:5092 A2A_PUBLIC_BASE_URL=http://127.0.0.1:5092 dotnet run --project federation/planner/services/a2a/PlannerAgent.Host/PlannerAgent.Host.csproj -c Release --no-build > /tmp/planner.log 2>&1 & echo $! > /tmp/planner.pid
+          ASPNETCORE_URLS=http://127.0.0.1:5093 A2A_PUBLIC_BASE_URL=http://127.0.0.1:5093 dotnet run --project federation/maker/services/a2a/MakerAgent.Host/MakerAgent.Host.csproj -c Release --no-build > /tmp/maker.log 2>&1 & echo $! > /tmp/maker.pid
+          ASPNETCORE_URLS=http://127.0.0.1:5094 A2A_PUBLIC_BASE_URL=http://127.0.0.1:5094 dotnet run --project federation/checker/services/a2a/CheckerAgent.Host/CheckerAgent.Host.csproj -c Release --no-build > /tmp/checker.log 2>&1 & echo $! > /tmp/checker.pid
+          ASPNETCORE_URLS=http://127.0.0.1:5095 A2A_PUBLIC_BASE_URL=http://127.0.0.1:5095 dotnet run --project federation/reflector/services/a2a/ReflectorAgent.Host/ReflectorAgent.Host.csproj -c Release --no-build > /tmp/reflector.log 2>&1 & echo $! > /tmp/reflector.pid
+      - name: Wait for all health endpoints
+        run: |
+          python3 - <<'PY'
+          import json,time,urllib.request
+          roles={'orchestrator':5091,'planner':5092,'maker':5093,'checker':5094,'reflector':5095}
+          for role,port in roles.items():
+              for _ in range(40):
+                  try:
+                      with urllib.request.urlopen(f'http://127.0.0.1:{port}/healthz',timeout=2) as r:
+                          data=json.load(r)
+                      open(f'/tmp/{role}.health.json','w').write(json.dumps(data))
+                      break
+                  except Exception:
+                      time.sleep(1)
+              else:
+                  raise SystemExit(f'health failed: {role}')
+              print(role,data)
+          PY
+      - name: Verify isolation and safety invariants
+        run: |
+          python3 - <<'PY'
+          import json
+          expected={
+            'orchestrator':{'agent':'orchestrator-agent','execution':'NOT_INVOKED'},
+            'planner':{'agent':'planner-agent','execution':'NOT_INVOKED'},
+            'maker':{'agent':'maker-agent','execution':'NOT_INVOKED','mcp':'NOT_CONNECTED'},
+            'checker':{'agent':'checker-agent','execution':'NOT_INVOKED','mutation':'DISALLOWED'},
+            'reflector':{'agent':'reflector-agent','execution':'NOT_INVOKED','next_cycle_dispatch':False},
+          }
+          for role,want in expected.items():
+              got=json.load(open(f'/tmp/{role}.health.json'))
+              assert got['status']=='PASS' and got['transport']=='A2A',(role,got)
+              for k,v in want.items(): assert got.get(k)==v,(role,k,got.get(k),v)
+          print('PASS five role health/isolation invariants')
+          PY
+      - name: Verify all agent cards
+        run: |
+          curl --fail --silent http://127.0.0.1:5091/.well-known/agent-card.json > /tmp/orchestrator.card.json
+          curl --fail --silent http://127.0.0.1:5092/.well-known/agent-card.json > /tmp/planner.card.json
+          curl --fail --silent http://127.0.0.1:5093/.well-known/agent-card.json > /tmp/maker.card.json
+          curl --fail --silent http://127.0.0.1:5094/.well-known/agent-card.json > /tmp/checker.card.json
+          curl --fail --silent http://127.0.0.1:5095/.well-known/agent-card.json > /tmp/reflector.card.json
+          python3 - <<'PY'
+          import json
+          names={'orchestrator':'PMCR-O Orchestrator Agent','planner':'PMCR-O Planner Agent','maker':'PMCR-O Maker Agent','checker':'PMCR-O Checker Agent','reflector':'PMCR-O Reflector Agent'}
+          for role,name in names.items():
+              card=json.load(open(f'/tmp/{role}.card.json'))
+              assert card['name']==name,(role,card.get('name'),name)
+              assert any(i.get('protocolVersion')=='1.0' for i in card.get('supportedInterfaces',[])),role
+          print('PASS five agent cards')
+          PY
+      - name: Invoke every role with official A2A client
+        run: |
+          dotnet run --project federation/orchestrator/services/a2a/OrchestratorAgent.Probe/OrchestratorAgent.Probe.csproj -c Release --no-build -- http://127.0.0.1:5091
+          dotnet run --project federation/planner/services/a2a/PlannerAgent.Probe/PlannerAgent.Probe.csproj -c Release --no-build -- http://127.0.0.1:5092
+          dotnet run --project federation/maker/services/a2a/MakerAgent.Probe/MakerAgent.Probe.csproj -c Release --no-build -- http://127.0.0.1:5093
+          dotnet run --project federation/checker/services/a2a/CheckerAgent.Probe/CheckerAgent.Probe.csproj -c Release --no-build -- http://127.0.0.1:5094
+          dotnet run --project federation/reflector/services/a2a/ReflectorAgent.Probe/ReflectorAgent.Probe.csproj -c Release --no-build -- http://127.0.0.1:5095
+      - name: Stop all hosts
+        if: always()
+        run: |
+          kill $(cat /tmp/orchestrator.pid) 2>/dev/null || true
+          kill $(cat /tmp/planner.pid) 2>/dev/null || true
+          kill $(cat /tmp/maker.pid) 2>/dev/null || true
+          kill $(cat /tmp/checker.pid) 2>/dev/null || true
+          kill $(cat /tmp/reflector.pid) 2>/dev/null || true
+          for f in /tmp/orchestrator.log /tmp/planner.log /tmp/maker.log /tmp/checker.log /tmp/reflector.log; do echo ==== $f ====; cat $f || true; done
+      - name: Record proof summary
+        run: |
+          echo '## PMCR-O A2A Federation Transport Proof' >> "$GITHUB_STEP_SUMMARY"
+          echo '- Five independent role hosts ran concurrently.' >> "$GITHUB_STEP_SUMMARY"
+          echo '- Five agent cards and five official-client A2A message round-trips passed.' >> "$GITHUB_STEP_SUMMARY"
+          echo '- Role providers remained NOT_INVOKED; Maker MCP stayed disconnected; Checker mutation stayed disallowed; Reflector dispatch stayed false.' >> "$GITHUB_STEP_SUMMARY"

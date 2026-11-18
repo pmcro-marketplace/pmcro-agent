@@ -1,0 +1,66 @@
+{
+  "kind": "PmcroA2AFederationTransportProof",
+  "version": 1,
+  "scope": "a2a-transport",
+  "provider_execution": "NOT_INVOKED",
+  "services": [
+    {
+      "role": "orchestrator",
+      "repository": "pmcro-marketplace/orchestrator-agent",
+      "commit": "d7063662f54b19365e317d8a3dc95eaf26d67ce1",
+      "port": 5091,
+      "agent": "orchestrator-agent",
+      "agent_card_name": "PMCR-O Orchestrator Agent",
+      "health": {
+        "execution": "NOT_INVOKED"
+      }
+    },
+    {
+      "role": "planner",
+      "repository": "pmcro-marketplace/planner-agent",
+      "commit": "5b532c962714e66da569c26110396fdd2b2c92a5",
+      "port": 5092,
+      "agent": "planner-agent",
+      "agent_card_name": "PMCR-O Planner Agent",
+      "health": {
+        "execution": "NOT_INVOKED"
+      }
+    },
+    {
+      "role": "maker",
+      "repository": "pmcro-marketplace/maker-agent",
+      "commit": "6e393b4553dfa1677e1030c9d59dbef46bd705ba",
+      "port": 5093,
+      "agent": "maker-agent",
+      "agent_card_name": "PMCR-O Maker Agent",
+      "health": {
+        "execution": "NOT_INVOKED",
+        "mcp": "NOT_CONNECTED"
+      }
+    },
+    {
+      "role": "checker",
+      "repository": "pmcro-marketplace/checker-agent",
+      "commit": "773c94530c9dd9fe2f4f275ad5f3fbb7b19a4db2",
+      "port": 5094,
+      "agent": "checker-agent",
+      "agent_card_name": "PMCR-O Checker Agent",
+      "health": {
+        "execution": "NOT_INVOKED",
+        "mutation": "DISALLOWED"
+      }
+    },
+    {
+      "role": "reflector",
+      "repository": "pmcro-marketplace/reflector-agent",
+      "commit": "4c0add58f6968ea2d95d11298139e39a90f7435e",
+      "port": 5095,
+      "agent": "reflector-agent",
+      "agent_card_name": "PMCR-O Reflector Agent",
+      "health": {
+        "execution": "NOT_INVOKED",
+        "next_cycle_dispatch": false
+      }
+    }
+  ]
+}
