@@ -1,0 +1,9 @@
+{
+  "name": "reflector",
+  "version": "0.1.0",
+  "description": "Reflect on an actual completed or blocked cycle and propose the next intent or earned constraint.",
+  "author": {
+    "email": "planneragent001@gmail.com",
+    "name": "Planner Agent"
+  }
+}

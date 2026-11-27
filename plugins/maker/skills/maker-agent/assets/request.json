@@ -1,0 +1,6 @@
+{
+  "kind": "CapabilityRequest",
+  "plugin": "maker",
+  "skill": "make",
+  "status": "proposed"
+}

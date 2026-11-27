@@ -1,0 +1,66 @@
+{
+    "name":  "Planner Agent",
+    "description":  "Plan bounded work from an admitted PMCR-O intent using validated resources and observable acceptance criteria.",
+    "version":  "0.1.0",
+    "provider":  {
+                     "organization":  "PMCR-O AI Agent Company",
+                     "url":  "https://github.com/pmcro-marketplace"
+                 },
+    "documentationUrl":  "https://github.com/pmcro-marketplace/planner-agent/blob/main/README.md",
+    "supportedInterfaces":  [
+                                {
+                                    "url":  "https://pmcro-marketplace.github.io/planner-agent/a2a",
+                                    "protocolBinding":  "JSONRPC",
+                                    "protocolVersion":  "1.0"
+                                }
+                            ],
+    "capabilities":  {
+                         "streaming":  false,
+                         "pushNotifications":  false,
+                         "extendedAgentCard":  false,
+                         "extensions":  [
+                                            {
+                                                "uri":  "pmcro/lifecycle/v1",
+                                                "description":  "PMCR-O lifecycle extension. Hook Agent may emit lifecycle functions above target execution; emission is not execution.",
+                                                "required":  false
+                                            }
+                                        ]
+                     },
+    "defaultInputModes":  [
+                              "text/plain"
+                          ],
+    "defaultOutputModes":  [
+                               "text/plain"
+                           ],
+    "securitySchemes":  {
+                            "apiKey":  {
+                                           "apiKeySecurityScheme":  {
+                                                                        "name":  "X-Api-Key",
+                                                                        "location":  "header",
+                                                                        "description":  "API key passed as X-Api-Key header"
+                                                                    }
+                                       }
+                        },
+    "skills":  [
+                   {
+                       "id":  "plan",
+                       "name":  "Plan",
+                       "description":  "Derive the bare-minimum executable plan for the orchestrator bounded goal using only validated resources and namespaced skills.",
+                       "tags":  [
+                                    "pmcro",
+                                    "planner-agent",
+                                    "plan",
+                                    "lifecycle"
+                                ],
+                       "examples":  [
+                                        "@planner-agent /planner:plan [bounded-goal]"
+                                    ],
+                       "inputModes":  [
+                                          "text/plain"
+                                      ],
+                       "outputModes":  [
+                                           "text/plain"
+                                       ]
+                   }
+               ]
+}

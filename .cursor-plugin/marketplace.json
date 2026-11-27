@@ -1,0 +1,80 @@
+{
+  "name": "pmcro-agent",
+  "interface": {
+    "displayName": "PMCR-O Agent Marketplace"
+  },
+  "plugins": [
+    {
+      "name": "pmcro",
+      "category": "Developer Tools",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/pmcro",
+        "source": "local"
+      }
+    },
+    {
+      "name": "orchestrator",
+      "category": "Developer Tools",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/orchestrator",
+        "source": "local"
+      }
+    },
+    {
+      "name": "planner",
+      "category": "Developer Tools",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/planner",
+        "source": "local"
+      }
+    },
+    {
+      "name": "maker",
+      "category": "Developer Tools",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/maker",
+        "source": "local"
+      }
+    },
+    {
+      "name": "checker",
+      "category": "Developer Tools",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/checker",
+        "source": "local"
+      }
+    },
+    {
+      "name": "reflector",
+      "category": "Developer Tools",
+      "policy": {
+        "authentication": "ON_INSTALL",
+        "installation": "AVAILABLE"
+      },
+      "source": {
+        "path": "./plugins/reflector",
+        "source": "local"
+      }
+    }
+  ]
+}

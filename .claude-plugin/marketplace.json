@@ -1,0 +1,38 @@
+{
+  "name": "pmcro-agent",
+  "owner": {
+    "name": "PMCR-O Marketplace"
+  },
+  "plugins": [
+    {
+      "name": "pmcro",
+      "source": "./plugins/pmcro",
+      "description": "Own the PMCR-O protocol, seed interpretation, role routing, cycle boundaries, and evidence rules while delegating Orchestrate, Plan, Make, Check, Reflect, and Hook behavior to their marketplace agents."
+    },
+    {
+      "name": "orchestrator",
+      "source": "./plugins/orchestrator",
+      "description": "Own one established high-level goal across bounded PMCR-O cycles, choose the current intent, and route one bounded cycle without performing Planner, Maker, Checker, or Reflector work."
+    },
+    {
+      "name": "planner",
+      "source": "./plugins/planner",
+      "description": "Plan bounded work from an admitted PMCR-O intent using validated resources and observable acceptance criteria."
+    },
+    {
+      "name": "maker",
+      "source": "./plugins/maker",
+      "description": "Produce the authorized artifact or state change using the narrowest real creator or provider capability."
+    },
+    {
+      "name": "checker",
+      "source": "./plugins/checker",
+      "description": "Validate an artifact or result against explicit acceptance criteria using actual evidence."
+    },
+    {
+      "name": "reflector",
+      "source": "./plugins/reflector",
+      "description": "Reflect on an actual completed or blocked cycle and propose the next intent or earned constraint."
+    }
+  ]
+}

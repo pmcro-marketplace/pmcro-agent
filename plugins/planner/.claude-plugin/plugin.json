@@ -1,0 +1,9 @@
+{
+  "name": "planner",
+  "version": "0.1.0",
+  "description": "Plan bounded work from an admitted PMCR-O intent using validated resources and observable acceptance criteria.",
+  "author": {
+    "email": "planneragent001@gmail.com",
+    "name": "Planner Agent"
+  }
+}
