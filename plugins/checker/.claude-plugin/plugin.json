@@ -1,0 +1,9 @@
+{
+  "name": "checker",
+  "version": "0.1.0",
+  "description": "Validate an artifact or result against explicit acceptance criteria using actual evidence.",
+  "author": {
+    "email": "planneragent001@gmail.com",
+    "name": "Planner Agent"
+  }
+}

@@ -1,0 +1,66 @@
+{
+    "name":  "Orchestrator Agent",
+    "description":  "Own one established high-level goal across bounded PMCR-O cycles, choose the current intent, and route one bounded cycle without performing Planner, Maker, Checker, or Reflector work.",
+    "version":  "0.1.0",
+    "provider":  {
+                     "organization":  "PMCR-O AI Agent Company",
+                     "url":  "https://github.com/pmcro-marketplace"
+                 },
+    "documentationUrl":  "https://github.com/pmcro-marketplace/orchestrator-agent/blob/main/README.md",
+    "supportedInterfaces":  [
+                                {
+                                    "url":  "https://pmcro-marketplace.github.io/orchestrator-agent/a2a",
+                                    "protocolBinding":  "JSONRPC",
+                                    "protocolVersion":  "1.0"
+                                }
+                            ],
+    "capabilities":  {
+                         "streaming":  false,
+                         "pushNotifications":  false,
+                         "extendedAgentCard":  false,
+                         "extensions":  [
+                                            {
+                                                "uri":  "pmcro/lifecycle/v1",
+                                                "description":  "PMCR-O lifecycle extension. Hook Agent may emit lifecycle functions above target execution; emission is not execution.",
+                                                "required":  false
+                                            }
+                                        ]
+                     },
+    "defaultInputModes":  [
+                              "text/plain"
+                          ],
+    "defaultOutputModes":  [
+                               "text/plain"
+                           ],
+    "securitySchemes":  {
+                            "apiKey":  {
+                                           "apiKeySecurityScheme":  {
+                                                                        "name":  "X-Api-Key",
+                                                                        "location":  "header",
+                                                                        "description":  "API key passed as X-Api-Key header"
+                                                                    }
+                                       }
+                        },
+    "skills":  [
+                   {
+                       "id":  "orchestrate",
+                       "name":  "Orchestrate",
+                       "description":  "Accept a seed, bound the goal, select validated resources, and delegate to the PMCR-O planner. Produces a pmcro-orchestration/v1 record.",
+                       "tags":  [
+                                    "pmcro",
+                                    "orchestrator-agent",
+                                    "orchestrate",
+                                    "lifecycle"
+                                ],
+                       "examples":  [
+                                        "@orchestrator-agent /orchestrator:orchestrate [your intent here]"
+                                    ],
+                       "inputModes":  [
+                                          "text/plain"
+                                      ],
+                       "outputModes":  [
+                                           "text/plain"
+                                       ]
+                   }
+               ]
+}

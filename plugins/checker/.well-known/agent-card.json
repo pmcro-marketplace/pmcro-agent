@@ -1,0 +1,66 @@
+{
+    "name":  "Checker Agent",
+    "description":  "Validate an artifact or result against explicit acceptance criteria using actual evidence.",
+    "version":  "0.1.0",
+    "provider":  {
+                     "organization":  "PMCR-O AI Agent Company",
+                     "url":  "https://github.com/pmcro-marketplace"
+                 },
+    "documentationUrl":  "https://github.com/pmcro-marketplace/checker-agent/blob/main/README.md",
+    "supportedInterfaces":  [
+                                {
+                                    "url":  "https://pmcro-marketplace.github.io/checker-agent/a2a",
+                                    "protocolBinding":  "JSONRPC",
+                                    "protocolVersion":  "1.0"
+                                }
+                            ],
+    "capabilities":  {
+                         "streaming":  false,
+                         "pushNotifications":  false,
+                         "extendedAgentCard":  false,
+                         "extensions":  [
+                                            {
+                                                "uri":  "pmcro/lifecycle/v1",
+                                                "description":  "PMCR-O lifecycle extension. Hook Agent may emit lifecycle functions above target execution; emission is not execution.",
+                                                "required":  false
+                                            }
+                                        ]
+                     },
+    "defaultInputModes":  [
+                              "text/plain"
+                          ],
+    "defaultOutputModes":  [
+                               "text/plain"
+                           ],
+    "securitySchemes":  {
+                            "apiKey":  {
+                                           "apiKeySecurityScheme":  {
+                                                                        "name":  "X-Api-Key",
+                                                                        "location":  "header",
+                                                                        "description":  "API key passed as X-Api-Key header"
+                                                                    }
+                                       }
+                        },
+    "skills":  [
+                   {
+                       "id":  "check",
+                       "name":  "Check",
+                       "description":  "Independently verify that Maker output follows the PMCR-O plan and its declared checks. Returns PASS, FAIL, or PARTIAL with each observed comparison.",
+                       "tags":  [
+                                    "pmcro",
+                                    "checker-agent",
+                                    "check",
+                                    "lifecycle"
+                                ],
+                       "examples":  [
+                                        "@checker-agent /checker:check [maker-evidence-path]"
+                                    ],
+                       "inputModes":  [
+                                          "text/plain"
+                                      ],
+                       "outputModes":  [
+                                           "text/plain"
+                                       ]
+                   }
+               ]
+}

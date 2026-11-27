@@ -1,0 +1,8 @@
+{
+  "name": "orchestrator",
+  "version": "0.3.0",
+  "description": "Own one established high-level goal across bounded PMCR-O cycles, choose the current intent, and route one bounded cycle without performing Planner, Maker, Checker, or Reflector work.",
+  "author": {
+    "name": "Planner Agent"
+  }
+}

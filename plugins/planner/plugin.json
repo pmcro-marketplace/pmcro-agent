@@ -1,0 +1,30 @@
+{
+    "$schema":  "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+    "author":  {
+                   "email":  "planneragent001@gmail.com",
+                   "name":  "Planner Agent"
+               },
+    "description":  "Plan bounded work from an admitted PMCR-O intent using validated resources and observable acceptance criteria.",
+    "extensions":  {
+                       "com.openai":  {
+                                          "interface":  {
+                                                            "capabilities":  [
+
+                                                                             ],
+                                                            "category":  "Developer Tools",
+                                                            "defaultPrompt":  "For every actionable request, resolve the real Agent -\u003e Plugin -\u003e Skill -\u003e Function. When the installed Hook Agent is available, allow it to autonomously emit and attempt only the applicable lifecycle functions above target execution. Invoke the real target capability and verify evidence. Hook emission is not execution; unavailable lifecycle providers return NOT_INVOKED.",
+                                                            "developerName":  "Planner Agent",
+                                                            "displayName":  "Planner Agent",
+                                                            "longDescription":  "Plan bounded work from an admitted PMCR-O intent using validated resources and observable acceptance criteria.",
+                                                            "shortDescription":  "Plan bounded PMCR-O work"
+                                                        }
+                                      }
+                   },
+    "keywords":  [
+                     "pmcro",
+                     "agent",
+                     "governance"
+                 ],
+    "name":  "planner",
+    "version":  "0.1.0"
+}

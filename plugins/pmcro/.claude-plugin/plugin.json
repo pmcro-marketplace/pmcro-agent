@@ -1,0 +1,8 @@
+{
+  "name": "pmcro",
+  "version": "0.4.0",
+  "description": "Own the PMCR-O protocol, seed interpretation, role routing, cycle boundaries, and evidence rules while delegating Orchestrate, Plan, Make, Check, Reflect, and Hook behavior to their marketplace agents.",
+  "author": {
+    "name": "Planner Agent"
+  }
+}

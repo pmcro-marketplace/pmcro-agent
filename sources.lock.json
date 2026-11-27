@@ -1,0 +1,125 @@
+{
+  "pmcro": {
+    "version": "0.4.0",
+    "skills": [
+      "interpret",
+      "pmcro"
+    ],
+    "sha256": {
+      ".claude-plugin/plugin.json": "143aaa0e66fce01fd84179960d28508e52f93b2dccf0734518aaff065fffb371",
+      ".codex-plugin/plugin.json": "35ec9af5e42bd853cacf57f24a838cc0aec43dbf3047874e9c65b691210d436b",
+      "INVOCATION.md": "52221412dc3dcc5e6ac9c4331f336653da5b667f1f803950009701ad8b73a069",
+      "plugin.json": "925040ed7602c526595f2b508e6e08e5c7ce5cacb0ab96aa93ebb79d3e5e4f62",
+      "README.md": "06c564eba9ca13f7673f0ae02e4e106d5386d1f069289976fff905ced3ced9a3",
+      "skills/interpret/assets/request.json": "b6e773da7013282e86f8f68891737a59997c7e1779a13d63f8ddec68cb9fcc37",
+      "skills/interpret/references/contract.md": "412631012484843e16a01969d467918f9f2fad062f8d4c0b81fd55a8d8bd0775",
+      "skills/interpret/scripts/validate.py": "a71ae3243eda4d6966e61018ae89a1cda595badc22d9a67974a5b271a87c6dc8",
+      "skills/interpret/SKILL.md": "6e2338f461b43bbe24c44d1c4cc8aff26b1c211ec0d6318c4bf3d1d8aa99308e",
+      "skills/pmcro/assets/request.json": "4305404c140440f19dbab2dfe479790251499d035efb8a55f2f84845324b3600",
+      "skills/pmcro/references/contract.md": "119182fa07f26adc853b25d6adc9c1dea3b68b72e014536fecfa0733e9c35bdd",
+      "skills/pmcro/references/protocol.md": "821887dad29797b9c18d907c08b6837ca400294f221e302abf87415be97b14d4",
+      "skills/pmcro/scripts/validate.py": "57536b815228b0b24d21cae644756a4f5043d8a12bb2c56623ac8bdad76d4e3e",
+      "skills/pmcro/SKILL.md": "398defe4e5aec1e49e98df5c62a2c45e5748674b141cedd0c9bd7284e00c0c20"
+    }
+  },
+  "orchestrator": {
+    "version": "0.3.0",
+    "skills": [
+      "orchestrate"
+    ],
+    "sha256": {
+      ".claude-plugin/plugin.json": "cd9bd9286144da80d535c9d1dd0f49673b138fb73a1f9a244e25900214c24c4b",
+      ".codex-plugin/plugin.json": "8c8e92530712dfe7ce5e89554d80e2b9c3f70187e6a07866316ab4fe15b6f41c",
+      ".well-known/agent-card.json": "fc73a24b03f68734a421db1c25d2362d98e89b81ac9475e6ef4767efdbaa5dba",
+      "INVOCATION.md": "70ecd71eef15301c4506d560b7d63e142c11a5facd281ce592015354d95e3a8f",
+      "plugin.json": "28f2db1801b514a29d5f6ea97325af8034b75afea7083db1549a17ed4bc6a38f",
+      "README.md": "b318c7a1dd9ea78b4abc6c35335a073a3cc0822ca5b97dd975d264772763cc73",
+      "skills/orchestrate/assets/request.json": "ccd6b471a2a40e30b2a30e79e7f78278631c2fef0b202bf99d60ce05726920d3",
+      "skills/orchestrate/references/contract.md": "dd2a33bb5dec8790928c9ae80450da15cc004e648687cdbd24426dda3a051e5b",
+      "skills/orchestrate/scripts/validate.py": "715b18e0de40123df5c624ea2fb35ad62f4e216fba5fb4509c3b9d453417ad34",
+      "skills/orchestrate/SKILL.md": "b993d047426cbd3a7540f3811aa76153d36726bd322899fca879dfbd7e70169e",
+      "skills/orchestrator-agent/assets/request.json": "ccd6b471a2a40e30b2a30e79e7f78278631c2fef0b202bf99d60ce05726920d3",
+      "skills/orchestrator-agent/references/contract.md": "dd2a33bb5dec8790928c9ae80450da15cc004e648687cdbd24426dda3a051e5b"
+    }
+  },
+  "planner": {
+    "version": "0.1.0",
+    "skills": [
+      "plan"
+    ],
+    "sha256": {
+      ".claude-plugin/plugin.json": "abefe60d89c3569448d98995fa4f43fdf060ea4390cc75bb347ffb302378ec78",
+      ".codex-plugin/plugin.json": "b8183265c59e5688198b3f97b02d3d01a3fc809e3cfba70e734ad1d63ccfcaa5",
+      ".well-known/agent-card.json": "9b626d01cd62b01f1dd5b5455d91d2fe9932b4bc4cfd142c32a0cf24ce8acb82",
+      "INVOCATION.md": "3abb6218fe5224525bcbe0eab8de1078a2b20ebb490ca1d825fd443f0150a0a9",
+      "plugin.json": "5976dd98c38c1b5a1519c8892ce207b1ecdef083f8a993a0ead8dfb5f81a9c36",
+      "README.md": "575d1f68363147484696527c6e339d0d2ac050bcc6aea74f85778ca389156737",
+      "skills/plan/assets/request.json": "293429fffc4870e69de9a185d62213759ca29c03e9cb40b3715a43a9f9674aad",
+      "skills/plan/references/contract.md": "6fe18c13cf64b7fc95c47651e78663b023e6a3a030f1c6beed8bfdb1766d50fc",
+      "skills/plan/scripts/validate.py": "afb56be65ce87d962980a703b9933bf0b23c73dc56eaedfa5c4dffa1f95015e9",
+      "skills/plan/SKILL.md": "0be19538ec720bbc67fa355a37d9bbb9c9889a12e371c7a4ee9fc6d549b5e187",
+      "skills/planner-agent/assets/request.json": "293429fffc4870e69de9a185d62213759ca29c03e9cb40b3715a43a9f9674aad",
+      "skills/planner-agent/references/contract.md": "6fe18c13cf64b7fc95c47651e78663b023e6a3a030f1c6beed8bfdb1766d50fc"
+    }
+  },
+  "maker": {
+    "version": "0.1.0",
+    "skills": [
+      "make"
+    ],
+    "sha256": {
+      ".claude-plugin/plugin.json": "42b8114c2908c741f4688b4d61189be969c2aafad68ebe32895fcffb07fb6783",
+      ".codex-plugin/plugin.json": "0a592f9e4e643505497c36b355bef27b0e636028a379555ade05ddd2b51dcb34",
+      ".well-known/agent-card.json": "f6347f586a7b86167ad18f347e03532646cdeca7d069c589de9298fd3ce679b7",
+      "INVOCATION.md": "fbf7c70f1b39d4249220ae991fa274b18155dfc5ffd8efe597859826cea6da33",
+      "plugin.json": "db232fcbcad6c6eda9dee0cf48953db4bd984a5a34e1c50fcc6f34370ab7dc9d",
+      "README.md": "6c20522641a8f4b13403f49c7cce153c1f540ad9ec3cd362cfbe9b4a2fb76f8c",
+      "skills/make/assets/request.json": "e8ffecef113f3581ff61868ffedf0fc5a608ef389a46a2cc08ade12be5a4922a",
+      "skills/make/references/contract.md": "00f633d27368baf7163f43f2d7f637f99a6ad4663519b23cc1900a208865dc30",
+      "skills/make/scripts/validate.py": "a657c26c01a1164f3ef9af01df7fd5300b9b62493adfbeaca5a7cf3bdc65059d",
+      "skills/make/SKILL.md": "5fd62f55741415eec5e18b409d62b1bfe4ffc1e60501c1463d3b8addc3983513",
+      "skills/maker-agent/assets/request.json": "e8ffecef113f3581ff61868ffedf0fc5a608ef389a46a2cc08ade12be5a4922a",
+      "skills/maker-agent/references/contract.md": "00f633d27368baf7163f43f2d7f637f99a6ad4663519b23cc1900a208865dc30"
+    }
+  },
+  "checker": {
+    "version": "0.1.0",
+    "skills": [
+      "check"
+    ],
+    "sha256": {
+      ".claude-plugin/plugin.json": "000fe902cc5d19617cd2c8fabafe49af2a3f03b43a0dc19089dcaf77e777b8ea",
+      ".codex-plugin/plugin.json": "73e450f1b83bcf05802c1776e45ccbd8f6d5bd42fe3523613c6497258ea3b9bf",
+      ".well-known/agent-card.json": "d33aa656bb84544e586b7e0172b2c9ab1d58a92972f27c1127b7b564ce07cd43",
+      "INVOCATION.md": "e3ce3cfbe040dc8a09a612e9555458d8222cf0769b5fae6efb012b589e56e71c",
+      "plugin.json": "798fee17db1cf9b84ecf6e2ca785441e61e89adb02a7e6051a208edcfa6ad721",
+      "README.md": "d5f34dcb3745d2cb47724a301796bcf193ba5905f98ccea29a6e717d77aeaa22",
+      "skills/check/assets/request.json": "45e2e910ea9aa3dab64ac3847bd50aea5bb8784734e4b51e4f00d478eade28d2",
+      "skills/check/references/contract.md": "4f452d8f56d375c28d7f4d6b9cc62714520686d7194e70d474d891778b0c0099",
+      "skills/check/scripts/validate.py": "31ef6e7632b2531897924c65753b41b8851aa961486dd4587fb80dad4d76887f",
+      "skills/check/SKILL.md": "e0f7b085f99b3be35fea4ff426cb4d38140f252d97551ee25adebe9c5e7bac66",
+      "skills/checker-agent/assets/request.json": "45e2e910ea9aa3dab64ac3847bd50aea5bb8784734e4b51e4f00d478eade28d2",
+      "skills/checker-agent/references/contract.md": "4f452d8f56d375c28d7f4d6b9cc62714520686d7194e70d474d891778b0c0099"
+    }
+  },
+  "reflector": {
+    "version": "0.1.0",
+    "skills": [
+      "reflect"
+    ],
+    "sha256": {
+      ".claude-plugin/plugin.json": "5b5b8f4d48c36c4c5d335f733413e3f442687dd291e546dccccc62e1c89fe6d1",
+      ".codex-plugin/plugin.json": "026905a139c7e8e6ab3fc208c3e96098b64da0ceed3c63a25fc163158f261d9e",
+      ".well-known/agent-card.json": "08a1d61d67588ec2f3d5cdd89d8432a43ef011bd98e249ee1a680c7b0fc0837a",
+      "INVOCATION.md": "1bb060134b1b1e076fd36fac1a39952419da42665c73dd0e53e2b4de9f7a024c",
+      "plugin.json": "838ca3c4b121210bfd1cc305b0415c2edf2158dbd3f5bba8e672d722f7997563",
+      "README.md": "25b1879a82f833937641fa09f5111848efd813978f2f7ef29b48f0f643af6623",
+      "skills/reflect/assets/request.json": "2a1896d0e6e3bfc6d7ce615d25d4b0bb1399e47b14b060e778f3244abd919829",
+      "skills/reflect/references/contract.md": "f71c38a3bf53ff43253af2cc683618ab38595fc628af1a2ce975f64f5ce9a2e2",
+      "skills/reflect/scripts/validate.py": "9bef261ab7ebd76e9e5d154f52d5957ab424ca8dce9302215135a838cb1c0100",
+      "skills/reflect/SKILL.md": "650c3249673b8ada793cf015ca7ba87425bfd3c2536bc9eaa37c309666fd9556",
+      "skills/reflector-agent/assets/request.json": "2a1896d0e6e3bfc6d7ce615d25d4b0bb1399e47b14b060e778f3244abd919829",
+      "skills/reflector-agent/references/contract.md": "f71c38a3bf53ff43253af2cc683618ab38595fc628af1a2ce975f64f5ce9a2e2"
+    }
+  }
+}

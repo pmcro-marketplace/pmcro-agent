@@ -1,0 +1,66 @@
+{
+    "name":  "Maker Agent",
+    "description":  "Produce the authorized artifact or state change using the narrowest real creator or provider capability.",
+    "version":  "0.1.0",
+    "provider":  {
+                     "organization":  "PMCR-O AI Agent Company",
+                     "url":  "https://github.com/pmcro-marketplace"
+                 },
+    "documentationUrl":  "https://github.com/pmcro-marketplace/maker-agent/blob/main/README.md",
+    "supportedInterfaces":  [
+                                {
+                                    "url":  "https://pmcro-marketplace.github.io/maker-agent/a2a",
+                                    "protocolBinding":  "JSONRPC",
+                                    "protocolVersion":  "1.0"
+                                }
+                            ],
+    "capabilities":  {
+                         "streaming":  false,
+                         "pushNotifications":  false,
+                         "extendedAgentCard":  false,
+                         "extensions":  [
+                                            {
+                                                "uri":  "pmcro/lifecycle/v1",
+                                                "description":  "PMCR-O lifecycle extension. Hook Agent may emit lifecycle functions above target execution; emission is not execution.",
+                                                "required":  false
+                                            }
+                                        ]
+                     },
+    "defaultInputModes":  [
+                              "text/plain"
+                          ],
+    "defaultOutputModes":  [
+                               "text/plain"
+                           ],
+    "securitySchemes":  {
+                            "apiKey":  {
+                                           "apiKeySecurityScheme":  {
+                                                                        "name":  "X-Api-Key",
+                                                                        "location":  "header",
+                                                                        "description":  "API key passed as X-Api-Key header"
+                                                                    }
+                                       }
+                        },
+    "skills":  [
+                   {
+                       "id":  "make",
+                       "name":  "Make",
+                       "description":  "Execute one explicitly authorized PMCR-O plan step through its declared namespaced skill or script. Reports dry-run unless -Execute is supplied.",
+                       "tags":  [
+                                    "pmcro",
+                                    "maker-agent",
+                                    "make",
+                                    "lifecycle"
+                                ],
+                       "examples":  [
+                                        "@maker-agent /maker:make [plan-path] -Execute"
+                                    ],
+                       "inputModes":  [
+                                          "text/plain"
+                                      ],
+                       "outputModes":  [
+                                           "text/plain"
+                                       ]
+                   }
+               ]
+}
